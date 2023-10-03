@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.mainPlayerCl.setOnClickListener {
-            val intent = Intent(this,SongActivity::class.java)
+            val intent = Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
-            intent.putExtra("singer",song.singer)
+            intent.putExtra("singer", song.singer)
             startActivity(intent)
         }
 
@@ -53,18 +53,21 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.searchFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, SearchFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.lockerFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, LockerFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
+
             }
             false
         }

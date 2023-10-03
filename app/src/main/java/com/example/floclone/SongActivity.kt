@@ -1,9 +1,11 @@
 package com.example.floclone
 
+import android.content.Context
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.floclone.databinding.ActivitySongBinding
 
 class SongActivity : AppCompatActivity() {
@@ -14,6 +16,7 @@ class SongActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState, persistentState)
         binding = ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.songDownIb.setOnClickListener {
             finish()
         }
@@ -22,6 +25,9 @@ class SongActivity : AppCompatActivity() {
         }
         binding.songPauseIv.setOnClickListener {
             setPlayerStatus(true)
+        }
+        binding.songRepeatIv.setOnClickListener {
+            songRepeatStatus(true)
         }
         if (intent.hasExtra("title") && intent.hasExtra("singer")){
             binding.songMusicTitleTv.text = intent.getStringExtra("title")
@@ -40,4 +46,14 @@ class SongActivity : AppCompatActivity() {
             binding.songPauseIv.visibility = View.VISIBLE
         }
     }
+
+    fun songRepeatStatus(isRepeat : Boolean){
+        if (isRepeat){
+            binding.songRepeatIv.setColorFilter(ContextCompat.getColor(this, androidx.appcompat.R.color.material_blue_grey_800))
+        }
+        else {
+            binding.songRepeatIv.clearColorFilter()
+        }
+    }
+
 }
