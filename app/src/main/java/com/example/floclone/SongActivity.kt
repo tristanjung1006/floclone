@@ -27,7 +27,10 @@ class SongActivity : AppCompatActivity() {
             setPlayerStatus(true)
         }
         binding.songRepeatIv.setOnClickListener {
-            songRepeatStatus(true)
+            songRepeatStatus()
+        }
+        binding.songRandomIv.setOnClickListener {
+            songRandomStatus()
         }
         if (intent.hasExtra("title") && intent.hasExtra("singer")){
             binding.songMusicTitleTv.text = intent.getStringExtra("title")
@@ -47,12 +50,21 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
-    fun songRepeatStatus(isRepeat : Boolean){
-        if (isRepeat){
+    fun songRepeatStatus(){
+        if (binding.songRepeatIv.colorFilter == null){
             binding.songRepeatIv.setColorFilter(ContextCompat.getColor(this, androidx.appcompat.R.color.material_blue_grey_800))
         }
         else {
             binding.songRepeatIv.clearColorFilter()
+        }
+    }
+
+    fun songRandomStatus(){
+        if (binding.songRandomIv.colorFilter == null){
+            binding.songRandomIv.setColorFilter(ContextCompat.getColor(this, androidx.appcompat.R.color.material_blue_grey_800))
+        }
+        else {
+            binding.songRandomIv.clearColorFilter()
         }
     }
 
