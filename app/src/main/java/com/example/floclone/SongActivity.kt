@@ -1,14 +1,11 @@
 package com.example.floclone
 
-import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.floclone.databinding.ActivitySongBinding
-import java.util.Timer
 
 class SongActivity : AppCompatActivity() {
 
@@ -16,8 +13,8 @@ class SongActivity : AppCompatActivity() {
     lateinit var song : Song
     lateinit var timer : Timer
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,20 +25,16 @@ class SongActivity : AppCompatActivity() {
             finish()
         }
         binding.songMiniplayerIv.setOnClickListener {
-            setPlayerStatus(false)
+            setPlayerStatus(true)
         }
         binding.songPauseIv.setOnClickListener {
-            setPlayerStatus(true)
+            setPlayerStatus(false)
         }
         binding.songRepeatIv.setOnClickListener {
             songRepeatStatus()
         }
         binding.songRandomIv.setOnClickListener {
             songRandomStatus()
-        }
-        if (intent.hasExtra("title") && intent.hasExtra("singer")){
-            binding.songMusicTitleTv.text = intent.getStringExtra("title")
-            binding.songSingerNameTv.text = intent.getStringExtra("singer")
         }
     }
 
@@ -55,8 +48,8 @@ class SongActivity : AppCompatActivity() {
             song = Song(
                 intent.getStringExtra("title")!!,
                 intent.getStringExtra("singer")!!,
-                intent.getIntExtra("second", 0)!!,
-                intent.getIntExtra("playTime", 0)!!,
+                intent.getIntExtra("second", 0),
+                intent.getIntExtra("playTime", 0),
                 intent.getBooleanExtra("isPlaying", false)
             )
         }
@@ -75,32 +68,32 @@ class SongActivity : AppCompatActivity() {
     }
 
     // 음악이 재생중일 때와 아닐 때를 구분
-    fun setPlayerStatus(isPlaying : Boolean){
+    private fun setPlayerStatus(isPlaying : Boolean){
         song.isPlaying = isPlaying
         timer.isPlaying = isPlaying
 
         if (isPlaying){
-            binding.songMiniplayerIv.visibility = View.VISIBLE
-            binding.songPauseIv.visibility = View.GONE
-        }
-        else {
             binding.songMiniplayerIv.visibility = View.GONE
             binding.songPauseIv.visibility = View.VISIBLE
         }
+        else {
+            binding.songMiniplayerIv.visibility = View.VISIBLE
+            binding.songPauseIv.visibility = View.GONE
+        }
     }
 
-    fun songRepeatStatus(){
+    private fun songRepeatStatus(){
         if (binding.songRepeatIv.colorFilter == null){
-            binding.songRepeatIv.setColorFilter(ContextCompat.getColor(this, androidx.appcompat.R.color.material_blue_grey_800))
+            binding.songRepeatIv.setColorFilter(ContextCompat.getColor(this, R.color.song_player))
         }
         else {
             binding.songRepeatIv.clearColorFilter()
         }
     }
 
-    fun songRandomStatus(){
+    private fun songRandomStatus(){
         if (binding.songRandomIv.colorFilter == null){
-            binding.songRandomIv.setColorFilter(ContextCompat.getColor(this, androidx.appcompat.R.color.material_blue_grey_800))
+            binding.songRandomIv.setColorFilter(ContextCompat.getColor(this, R.color.song_player))
         }
         else {
             binding.songRandomIv.clearColorFilter()
@@ -110,7 +103,6 @@ class SongActivity : AppCompatActivity() {
     private fun startTimer() {
         timer = Timer(song.playTime, song.isPlaying)
         timer.start()
-
     }
 
     inner class Timer(private val playTime: Int, var isPlaying: Boolean = true): Thread() {
