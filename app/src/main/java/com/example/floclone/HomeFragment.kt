@@ -21,13 +21,13 @@ class HomeFragment : Fragment() {
 
         binding.homeAlbumImgIv1.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm , AlbumFragment())
+                .replace(R.id.main_frm , com.example.floclone.AlbumFragment())
                 .commitAllowingStateLoss()
         }
 
-        val bannerAdapter = BannerVPAdapter(this)
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
+        val bannerAdapter = com.example.floclone.BannerVPAdapter(this)
+        bannerAdapter.addFragment(com.example.floclone.BannerFragment(R.drawable.img_home_viewpager_exp))
+        bannerAdapter.addFragment(com.example.floclone.BannerFragment(R.drawable.img_home_viewpager_exp2))
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
